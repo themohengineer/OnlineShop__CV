@@ -58,4 +58,8 @@ public class Product {
     @JoinColumn(nullable = false)
     private File image;
 
+    @ManyToOne
+    private ProductCategory category;
+
+
 }

@@ -4,5 +4,6 @@
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/72c4ce35-e617-4bee-98b7-f46e1e0ff785/console.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/03_ file.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/04_ pcat.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/05_ product.sql" dialect="PostgreSQL" />
   </component>
 </project>

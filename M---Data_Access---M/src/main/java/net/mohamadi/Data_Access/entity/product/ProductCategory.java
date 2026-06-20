@@ -31,4 +31,5 @@ public class ProductCategory {
     @JoinColumn(nullable = false)
     private File image;
 
+
 }
