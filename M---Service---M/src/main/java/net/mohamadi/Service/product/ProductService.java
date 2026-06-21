@@ -1,17 +1,21 @@
 package net.mohamadi.Service.product;
 
 
+import net.mohamadi.Common.exceptions.NotFoundExceptionss;
 import net.mohamadi.Data_Access.entity.product.Product;
+import net.mohamadi.Data_Access.entity.site.Blog;
 import net.mohamadi.Data_Access.repository.product.ColorRepository;
 import net.mohamadi.Data_Access.repository.product.ProductCategoryRepository;
 import net.mohamadi.Data_Access.repository.product.ProductRepository;
 import net.mohamadi.Data_Access.repository.product.SizeRepository;
 import net.mohamadi.dto.product.ProductCategoryDto;
 import net.mohamadi.dto.product.ProductDto;
+import net.mohamadi.dto.site.SingleBlogDto;
 import net.mohamadi.enums.ProductQueryType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +70,16 @@ public class ProductService {
                 .map(x -> mapper
                         .map(x, ProductDto.class))
                 .toList();
+    }
+
+
+    @Transactional(readOnly = true)
+    // باز نگه داشتن سشن Hibernate برای جلوگیری از LazyInitializationException در زمان مپ کردن
+    public ProductDto read(Long id) throws NotFoundExceptionss {
+        Product product = repository
+                .findById(id)
+                .orElseThrow(NotFoundExceptionss::new);
+        return mapper.map(product, ProductDto.class);
     }
 
 

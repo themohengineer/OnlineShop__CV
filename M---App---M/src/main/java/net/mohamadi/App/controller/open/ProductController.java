@@ -2,6 +2,7 @@ package net.mohamadi.App.controller.open;
 
 
 import net.mohamadi.App.model.APIResponse;
+import net.mohamadi.Common.exceptions.NotFoundExceptionss;
 import net.mohamadi.Service.product.ProductService;
 import net.mohamadi.dto.product.ProductCategoryDto;
 import net.mohamadi.dto.product.ProductDto;
@@ -48,6 +49,26 @@ public class ProductController {
                 .status(HttpStatus.OK)
                 .data(service.read6TopProducts(type))
                 .build();
+
+    }
+
+    @GetMapping("{id}")
+    public APIResponse<ProductDto> getSingleProduct(
+            @PathVariable Long id) {
+
+        try {
+            return APIResponse
+                    .<ProductDto>builder()
+                    .status(HttpStatus.OK)
+                    .data(service.read(id))
+                    .build();
+        } catch (NotFoundExceptionss e) {
+            return APIResponse
+                    .<ProductDto>builder()
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .message(e.getMessage())
+                    .build();
+        }
 
     }
 

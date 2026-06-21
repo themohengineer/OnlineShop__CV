@@ -2,21 +2,5 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/72c4ce35-e617-4bee-98b7-f46e1e0ff785/console.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/01_nav.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/02_file.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/03_slider.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/04_pcat.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/05_product.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/06_color.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/07_size.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/08_pcolor.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/09_psize.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/10_content.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/11_blog.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/12_permissions.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/13_roles.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/14_role_permissions.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/15_users.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/M---Doc---M/src/main/java/queries/16_user_roles.sql" dialect="PostgreSQL" />
   </component>
 </project>
