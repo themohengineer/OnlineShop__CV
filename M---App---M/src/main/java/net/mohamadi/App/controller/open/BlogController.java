@@ -27,7 +27,8 @@ public class BlogController {
     }
 
 
-    //    https://127.0.0.1/api/blog?page=1&size=1    @GetMapping("")
+    //    https://127.0.0.1/api/blog?page=1&size=1
+    @GetMapping("")
     public APIResponse<List<BlogDto>> getAll(
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
