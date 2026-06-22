@@ -28,11 +28,6 @@ public class User {
     @Column(length = 11, nullable = false)
     private String mobile;
 
-    @Column(length = 500)
-    private String firstName;
-
-    @Column(length = 500)
-    private String LastName;
 
     @Column(length = 50, nullable = false)
     private String password;
@@ -49,5 +44,10 @@ public class User {
 
     //اگر JoinTable نگذاریم بازهم
     // جدول واسط ساخته خواهد شد اما با نام پیش فرض
+
+
+
+    @OneToOne
+    private Customer customer;
 
 }
