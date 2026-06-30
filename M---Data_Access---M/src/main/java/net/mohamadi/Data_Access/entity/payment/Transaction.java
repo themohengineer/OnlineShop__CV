@@ -20,7 +20,8 @@ public class Transaction {
     private Long amount;
 
     @ManyToOne
-    private Invoice invoice;
+    private Invoice invoice;//ممکن است یک فاکتور چندین تراکنش داشته باشد (مثلاً تلاش‌های ناموفق،
+    // بازگشت وجه، یا تراکنش‌های آزمایشی).
 
     @ManyToOne
     private User customer;
@@ -31,7 +32,9 @@ public class Transaction {
     private String resultMessage;
 
     @ManyToOne
-    private Payment payment;
+    private Payment payment;//یعنی هر تراکنش (Transaction) از یک
+    // روش پرداخت (Payment) استفاده می‌کند، اما هر روش پرداخت
+    // می‌تواند در چندین تراکنش به کار رود.
 
 
 }

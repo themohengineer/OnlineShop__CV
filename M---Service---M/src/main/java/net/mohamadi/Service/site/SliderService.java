@@ -16,7 +16,7 @@ public class SliderService {
 
 
     private final SliderRepository repository;
-private final ModelMapper mapper;
+    private final ModelMapper mapper;
 
     @Autowired
     public SliderService(SliderRepository repository, ModelMapper mapper) {

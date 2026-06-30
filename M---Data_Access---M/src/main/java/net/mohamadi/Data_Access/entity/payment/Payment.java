@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 
 
-//Invoice means " Factor "
 public class Payment {
 
     @Id

@@ -2,6 +2,7 @@ package net.mohamadi.App.controller.open;
 
 
 import net.mohamadi.App.model.APIResponse;
+import net.mohamadi.Common.exceptions.ValidationException;
 import net.mohamadi.Service.payment.PaymentService;
 import net.mohamadi.dto.payment.GoToPaymentDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,19 @@ public class PaymentController {
 
     @PostMapping("goToPayment")
     public APIResponse<String> goToPayment(@RequestBody GoToPaymentDto dto) {
-        return APIResponse
-                .<String>builder()
-                .status(HttpStatus.OK)
-                .data(service.goToPayment(dto))
-                .build();
+        try {
+            return APIResponse
+                    .<String>builder()
+                    .status(HttpStatus.OK)
+                    .data(service.goToPayment(dto))
+                    .build();
+        } catch (ValidationException e) {
+            APIResponse
+                    .<String>builder()
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .data(e.getMessage())
+                    .build();
+        }
     }
 
 

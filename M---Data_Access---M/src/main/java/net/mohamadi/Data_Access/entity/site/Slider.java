@@ -32,6 +32,7 @@ public class Slider {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private File image;
+    private File image;   //یعنی هر اسلایدر (Slider) یک فایل تصویر دارد، ولی
+    // هر فایل (File) می‌تواند برای چندین اسلایدر استفاده شود.
 
 }

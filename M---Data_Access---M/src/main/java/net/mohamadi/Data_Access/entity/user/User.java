@@ -31,10 +31,9 @@ public class User {
 
     @Column(length = 50, nullable = false)
     private String password;
-
     private String email;
     private LocalDateTime registerDate;
-    private Boolean enable = true;
+    private Boolean enable = true; //Soft Delete
 
     @ManyToMany//یعنی بین User و Role رابطه چند به چند
     @JoinTable(name = "user_role",//برای ذخیره این ارتباط، یک جدول واسط در دیتابیس بساز به نام user_role

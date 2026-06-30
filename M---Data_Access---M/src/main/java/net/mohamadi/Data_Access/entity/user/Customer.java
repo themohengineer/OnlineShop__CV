@@ -37,9 +37,15 @@ public class Customer {
     @Column(length = 1000)
     private String address;
 
-
     @Column(length = 20)
     private String postalCode;
+
+/*
+اگر در آینده نیاز پیدا کردی که از سمت Customer هم به User دسترسی داشته باشی
+(مثلاً بگویی customer.getUser())، آن‌وقت باید رابطه را دوطرفه کنی.
+@OneToOne(mappedBy = "customer")
+private User user;
+ */
 
 
 }

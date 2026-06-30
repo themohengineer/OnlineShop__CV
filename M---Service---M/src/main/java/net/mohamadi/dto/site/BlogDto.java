@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import net.mohamadi.Data_Access.entity.file.File;
 import net.mohamadi.Data_Access.enums.BlogStatus;
+import net.mohamadi.dto.file.FileDto;
 
 import java.time.LocalDateTime;
 
@@ -21,7 +22,7 @@ public class BlogDto {
     private String subTitle;
     private LocalDateTime publishDate;
     private Long visitCount;
-    private File image;
+    private FileDto image;
 
 
 }

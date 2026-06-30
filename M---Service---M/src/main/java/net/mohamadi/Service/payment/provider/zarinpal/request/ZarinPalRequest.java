@@ -3,8 +3,6 @@ package net.mohamadi.Service.payment.provider.zarinpal.request;
 
 import lombok.*;
 
-import java.lang.reflect.Array;
-
 @Getter
 @Setter
 @Builder
@@ -14,7 +12,7 @@ import java.lang.reflect.Array;
 public class ZarinPalRequest {
 
     private String merchant_id;
-    private String currency;
+    private String currency;//	واحد پول (IRR برای ریال، IRT برای تومان)
     private String description;
     private String callback_url;
     private String referrer_id;
@@ -22,12 +20,12 @@ public class ZarinPalRequest {
     private MetaData metaData;
 
 
-
     @Getter
     @Setter
     @Builder
-    public static class MetaData{
-
+    public static class MetaData {
+        //زرین‌پال از این اطلاعات برای ارسال
+        // ایمیل/پیامک تأیید یا نمایش در پنل استفاده می‌کند
         private String mobile;
         private String email;
         private String order_id;

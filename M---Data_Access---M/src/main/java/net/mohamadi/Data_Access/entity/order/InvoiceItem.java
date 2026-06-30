@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 
 
-//Invoice means " Factor "
 public class InvoiceItem {
 
     @Id
