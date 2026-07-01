@@ -34,7 +34,7 @@ public class UserPanelController {
     public UserDto testGetById(@PathVariable Long id) {
 
         try {
-            return userService.getUserById(id);
+            return userService.read(id);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +55,7 @@ public class UserPanelController {
             return APIResponse
                     .<UserDto>builder()
                     .status(HttpStatus.OK)
-                    .data(userService.getUserById(id))
+                    .data(userService.read(id))
                     .build();
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -53,7 +53,7 @@ public class JwtFilter implements Filter {
         if (!token.isEmpty() && jwtUtil.validateToken(token)) {
             String username = jwtUtil.getUserNameFromJWT(token);
             try {
-                httpRequest.setAttribute(CURRENT_USER, userService.getUserByUserName(username));
+                httpRequest.setAttribute(CURRENT_USER, userService.readUserByUserName(username));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

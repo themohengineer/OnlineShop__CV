@@ -14,8 +14,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users") //در دیتابیس Postgre کلمه user یک کلمه کلیدی است
-// برای همین s اضافه کردیم
+
 public class Customer {
 
     @Id

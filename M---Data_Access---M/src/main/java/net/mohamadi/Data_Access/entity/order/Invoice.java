@@ -25,13 +25,10 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(length = 1000, nullable = false)
-    private String number;
-
     private LocalDateTime createDate;
     private LocalDateTime payedDate;
     private OrderStatus status;
+    private Long totalAmount;
 
     @OneToMany(mappedBy = "invoice")
     private List<InvoiceItem> items;

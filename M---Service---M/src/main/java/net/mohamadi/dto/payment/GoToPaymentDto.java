@@ -32,6 +32,8 @@ public class GoToPaymentDto {
     @Getter
     @Setter
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class BasketItem {
 
         private Long productId;

@@ -15,12 +15,11 @@ public class UserDto {
     private Long id;
     private String username;
     private String mobile;
-    private String firstName;
-    private String LastName;
     private String password;
     private String email;
     private LocalDateTime registerDate;
     private Boolean enable = true;
     private Set<RoleDto> roles;
 
+    private CustomerDto customer;
 }

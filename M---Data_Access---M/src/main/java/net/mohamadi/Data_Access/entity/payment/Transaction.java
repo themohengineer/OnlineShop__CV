@@ -12,6 +12,8 @@ import net.mohamadi.Data_Access.entity.user.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "trx")
+
+@Entity
 public class Transaction {
 
     @Id

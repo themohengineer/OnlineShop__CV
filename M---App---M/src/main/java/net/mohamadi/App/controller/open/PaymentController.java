@@ -1,6 +1,7 @@
 package net.mohamadi.App.controller.open;
 
 
+import jakarta.transaction.Transactional;
 import net.mohamadi.App.model.APIResponse;
 import net.mohamadi.Common.exceptions.ValidationException;
 import net.mohamadi.Service.payment.PaymentService;
@@ -25,8 +26,10 @@ public class PaymentController {
         this.service = service;
     }
 
+
+    @Transactional
     @PostMapping("goToPayment")
-    public APIResponse<String> goToPayment(@RequestBody GoToPaymentDto dto) {
+    public APIResponse<String> goToPayment(@RequestBody GoToPaymentDto dto) throws Exception {
         try {
             return APIResponse
                     .<String>builder()
@@ -34,12 +37,13 @@ public class PaymentController {
                     .data(service.goToPayment(dto))
                     .build();
         } catch (ValidationException e) {
-            APIResponse
+            return APIResponse
                     .<String>builder()
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .data(e.getMessage())
+                    .message(e.getMessage())
                     .build();
         }
+
     }
 
 
