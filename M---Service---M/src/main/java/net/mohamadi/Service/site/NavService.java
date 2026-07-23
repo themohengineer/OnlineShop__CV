@@ -89,7 +89,6 @@ public class NavService implements CRUDService<NavDto>, HasValidation<NavDto> {
         if (navDto.getTitle() == null || navDto.getTitle().isEmpty()) {
             throw new ValidationException("Please fill NAV Title !");
         }
-
         if (navDto.getLink() == null || navDto.getLink().isEmpty()) {
             throw new ValidationException("Please fill NAV Title !");
         }
