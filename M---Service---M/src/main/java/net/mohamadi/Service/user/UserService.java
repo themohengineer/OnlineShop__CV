@@ -105,14 +105,13 @@ public class UserService {
                     " لطفا ابتدا وارد شوید!");
 
 
-
-
         Customer customer = customerRepository
                 .save(mapper
                         .map(dto.getCustomer(), Customer.class)
                 );
 
         User user = mapper.map(dto, User.class);
+        user.setId(null);
         user.setCustomer(customer);
         user.setPassword(HashUtil.toSHA1(user.getPassword()));
         user.setRegisterDate(LocalDateTime.now());

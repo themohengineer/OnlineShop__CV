@@ -15,7 +15,6 @@ public class ZarinPalRequest {
     private String currency;//	واحد پول (IRR برای ریال، IRT برای تومان)
     private String description;
     private String callback_url;
-    private String referrer_id;
     private Integer amount;
     private MetaData metaData;
 

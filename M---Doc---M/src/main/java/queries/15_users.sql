@@ -1,4 +1,4 @@
-insert into users (id, email, enable, first_name, last_name, mobile, password, register_date, username)
-values (1,'hossein@gmail.com',true,'Hossein','Badrnezhad','09121234567','40bd001563085fc35165329ea1ff5c5ecbdbbeef',now(),'admin');
-insert into users (id, email, enable, first_name, last_name, mobile, password, register_date, username)
-values (2,'user@gmail.com',true,'Ali','Bayat','09121234568','40bd001563085fc35165329ea1ff5c5ecbdbbeef',now(),'user');
+insert into customer (id, address, firstname, lastname, postal_code, tel)
+values (1, 'tehran', 'Hossein', 'Badrnezhad', '1234567890', '02112345678');
+insert into user (id, email, enable, mobile, password, register_date, username, customer_id)
+values (1, 'hossein@gmail.com', 1, '09121234567', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', now(), 'admin', 1);

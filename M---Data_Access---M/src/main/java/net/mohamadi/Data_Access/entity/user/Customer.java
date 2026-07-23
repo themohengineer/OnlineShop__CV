@@ -28,7 +28,7 @@ public class Customer {
     private String firstName;
 
     @Column(length = 500)
-    private String LastName;
+    private String lastName;
 
     @Column(length = 20)
     private String tel;

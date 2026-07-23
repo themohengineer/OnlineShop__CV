@@ -2,8 +2,11 @@ package net.mohamadi.Service.payment.provider.zarinpal.client;
 
 
 import net.mohamadi.Service.payment.provider.zarinpal.request.ZarinPalRequest;
+import net.mohamadi.Service.payment.provider.zarinpal.request.ZarinPalVerifyRequest;
 import net.mohamadi.Service.payment.provider.zarinpal.response.ZarinPalResponse;
 import net.mohamadi.Service.payment.provider.zarinpal.response.ZarinPalResponseWrapper;
+import net.mohamadi.Service.payment.provider.zarinpal.response.ZarinPalVerifyResponse;
+import net.mohamadi.Service.payment.provider.zarinpal.response.ZarinPalVerifyResponseWrapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,24 +24,24 @@ public class ZarinPalClient {
 
     private String baseUrl;
 
-    public ZarinPalResponse goToPayment(ZarinPalRequest request) {
+    public ZarinPalVerifyResponse verifyPayment(ZarinPalVerifyRequest request) {
 
-        String url = baseUrl + "v4/payment/request.json";
+        String url = baseUrl + "v4/payment/verify.json";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<ZarinPalRequest> requestEntity = new
+        HttpEntity<ZarinPalVerifyRequest> requestEntity = new
                 HttpEntity<>(request, headers);//ساخت HttpEntity:
         // درخواست (بدنه + هدرها) را بسته‌بندی می‌کند
 
         RestTemplate restTemplate = new RestTemplate();//یک کلاینت HTTP قدرتمند در
         // Spring که برای ارسال درخواست‌های RESTful استفاده می‌شود
 
-        ResponseEntity<ZarinPalResponseWrapper> response = restTemplate.postForEntity(
+        ResponseEntity<ZarinPalVerifyResponseWrapper> response = restTemplate.postForEntity(
                 url,//آدرس نهایی
                 requestEntity,//بدنه درخواست (شامل ZarinPalRequest و هدرها)
-                ZarinPalResponseWrapper.class);
+                ZarinPalVerifyResponseWrapper.class);
 
         //نتیجه: یک ResponseEntity شامل پاسخ HTTP و بدنه
         // (که به ZarinPalResponseWrapper تبدیل شده است) برمی‌گرداند.

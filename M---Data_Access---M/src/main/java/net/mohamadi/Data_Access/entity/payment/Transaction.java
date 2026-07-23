@@ -30,8 +30,13 @@ public class Transaction {
 
     private String authority;
     private String code;
+    private String verifyCode;
     private String description;
     private String resultMessage;
+    private String verifyMessage;
+    private String cardHash;
+    private String cardPan;
+    private String refId;
 
     @ManyToOne
     private Payment payment;//یعنی هر تراکنش (Transaction) از یک

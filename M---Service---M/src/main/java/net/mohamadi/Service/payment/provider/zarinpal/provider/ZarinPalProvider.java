@@ -3,8 +3,11 @@ package net.mohamadi.Service.payment.provider.zarinpal.provider;
 
 import net.mohamadi.Data_Access.entity.payment.Transaction;
 import net.mohamadi.Service.payment.provider.zarinpal.client.ZarinPalClient;
+import net.mohamadi.Service.payment.provider.zarinpal.client.ZarinPalClientMock;
 import net.mohamadi.Service.payment.provider.zarinpal.request.ZarinPalRequest;
+import net.mohamadi.Service.payment.provider.zarinpal.request.ZarinPalVerifyRequest;
 import net.mohamadi.Service.payment.provider.zarinpal.response.ZarinPalResponse;
+import net.mohamadi.Service.payment.provider.zarinpal.response.ZarinPalVerifyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,11 +28,11 @@ public class ZarinPalProvider {
     private String ipgUrl;// آدرس درگاه پرداخت
     // زرین‌پال (که کاربر به آن هدایت می‌شود)
 
-    private final ZarinPalClient client;//یک نمونه از ZarinPalClient که برای
+    private final ZarinPalClientMock client;//یک نمونه از ZarinPalClient که برای
     // ارسال درخواست به زرین‌پال استفاده می‌شود
 
     @Autowired
-    public ZarinPalProvider(ZarinPalClient client) {
+    public ZarinPalProvider(ZarinPalClientMock client) {
         this.client = client;
     }
 
@@ -57,6 +60,29 @@ public class ZarinPalProvider {
         }
         assert response != null;
         return ipgUrl + response.getAuthority();
+    }
+
+
+    public Transaction verify(Transaction trx) {
+        //یک Transaction دریافت می‌کند و آدرس IPG را برمی‌گرداند
+        ZarinPalVerifyRequest request = ZarinPalVerifyRequest.builder()
+                .merchant_id(merchantId)
+                .amount(trx.getAmount().intValue())
+                .authority(trx.getAuthority())
+                .build();
+        ZarinPalVerifyResponse response = client
+                .verifyPayment(request);
+
+        if (response != null) {
+            trx.setVerifyCode(response.getCode());
+            trx.setVerifyMessage(response.getMessage());
+            trx.setCardHash(response.getCard_hash());
+            trx.setCardPan(response.getCard_pan());
+            trx.setRefId(response.getRef_id());
+        }
+
+        return trx;
+
     }
 
 

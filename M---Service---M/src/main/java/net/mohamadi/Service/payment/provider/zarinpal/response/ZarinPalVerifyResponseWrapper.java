@@ -9,10 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class ZarinPalResponseWrapper {
+public class ZarinPalVerifyResponseWrapper {
 
 
-    private ZarinPalResponse data;
+    private ZarinPalVerifyResponse data;
     private Object[] Errors;
 
 

@@ -1,0 +1,35 @@
+
+//برای اینکه اطلاعات مشتری اینجا ثبت شود توی دوره استاد گذاشت
+{
+  "firstname":"Joe",
+  "lastname":"Tomson",
+  "gateway":"Zarinpal",
+  "username":"Alex",
+  "password":"Joe123456",
+  "email":"Joe@gmail.com",
+  "mobile":"0993625481",
+  "tel":"+9802159124",
+  "address":"Tehran   Iran",
+  "postalCode":"65165286846516",
+  "items":[
+
+    {
+      "productId":66,
+      "colorId":24,
+      "sizeId":132,
+      "quantity":1
+    }
+
+
+
+  ]
+
+  //  private Long productId;
+  //         private Long colorId;
+  //         private Long sizeId;
+  //         private Long quantity;
+
+
+
+
+}

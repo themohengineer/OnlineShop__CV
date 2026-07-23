@@ -30,4 +30,6 @@ public class Payment {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
+    private Boolean enable=true;
+
 }

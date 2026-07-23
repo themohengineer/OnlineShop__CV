@@ -15,6 +15,7 @@ import net.mohamadi.Service.user.UserService;
 import net.mohamadi.dto.invoice.InvoiceDto;
 import net.mohamadi.dto.invoice.InvoiceItemDto;
 import net.mohamadi.dto.payment.GoToPaymentDto;
+import net.mohamadi.dto.payment.PaymentDto;
 import net.mohamadi.dto.product.ColorDto;
 import net.mohamadi.dto.product.ProductDto;
 import net.mohamadi.dto.product.SizeDto;
@@ -24,6 +25,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
@@ -37,6 +40,7 @@ public class PaymentService {
     private final UserService userService;
     private final InvoiceService invoiceService;
     private final ModelMapper modelMapper;
+
 
     @Autowired
     public PaymentService(PaymentRepository repository,
@@ -73,6 +77,7 @@ public class PaymentService {
 
         checkValidation(dto);
 
+
         UserDto user = userService.create(UserDto.builder()
                 .username(dto.getUsername())
                 .mobile(dto.getMobile())
@@ -81,8 +86,9 @@ public class PaymentService {
                 .customer(CustomerDto.builder()
                         .firstName(dto.getFirstname())
                         .lastName(dto.getLastname())
+                        .mobile(dto.getMobile())
                         .tel(dto.getTel())
-                        .address(dto.getTel())
+                        .address(dto.getAddress())
                         .postalCode(dto.getPostalCode())
                         .build())
                 .build());
@@ -135,6 +141,26 @@ public class PaymentService {
 
     }
 
+
+    public String verify(String authority, String status) throws NotFoundExceptionss {
+
+        if (status == null || status.isEmpty() || status.equalsIgnoreCase("NOK"))
+            return "NOK";
+
+        if (status.equalsIgnoreCase("OK")) {
+
+            Transaction trx = trxRepository
+                    .findFirstByAuthorityEqualsIgnoreCase(authority)
+                    .orElseThrow(NotFoundExceptionss::new);
+            Transaction verifiedTrx = zarinPalProvider.verify(trx);
+            trxRepository.save(verifiedTrx);
+            return "OK";
+        }
+        return "NOK";
+
+    }
+
+
     private static void checkValidation(GoToPaymentDto dto) throws ValidationException {
         if (dto.getGateway() == null)
             throw new ValidationException("Gateway is null");
@@ -158,5 +184,17 @@ public class PaymentService {
             throw new ValidationException("PostalCode is null or empty");
         if (dto.getItems() == null || dto.getItems().isEmpty())
             throw new ValidationException("Please add at least one item");
+    }
+
+    public List<PaymentDto> readAllGatewas() {
+
+        return repository
+                .findAllByEnableIsTrue()
+                .stream()
+                .map(x -> modelMapper
+                        .map(x, PaymentDto.class))
+                .toList();
+
+
     }
 }
