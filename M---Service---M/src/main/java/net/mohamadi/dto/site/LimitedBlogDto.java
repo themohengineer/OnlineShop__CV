@@ -1,9 +1,7 @@
 package net.mohamadi.dto.site;
 
 
-import jakarta.persistence.*;
 import lombok.*;
-import net.mohamadi.Data_Access.entity.file.File;
 import net.mohamadi.Data_Access.enums.BlogStatus;
 import net.mohamadi.dto.file.FileDto;
 
@@ -14,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogDto {
+public class LimitedBlogDto {
 
 
     private Long id;
@@ -23,7 +21,5 @@ public class BlogDto {
     private LocalDateTime publishDate;
     private Long visitCount;
     private FileDto image;
-    private String description;
-    private BlogStatus status;
 
 }

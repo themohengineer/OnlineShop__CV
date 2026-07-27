@@ -1,4 +1,4 @@
-package net.mohamadi.App.controller.panel;
+package net.mohamadi.App.controller.panel.user;
 
 
 import jakarta.servlet.http.HttpServletRequest;

@@ -2,11 +2,12 @@ package net.mohamadi.App.model;
 
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 

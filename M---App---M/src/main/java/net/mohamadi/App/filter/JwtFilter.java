@@ -68,7 +68,7 @@ public class JwtFilter implements Filter {
         String prefix = "Bearer";
         String token = "";
         if (bearerToken != null && bearerToken.startsWith(prefix)) {
-            token = bearerToken.substring(prefix.length());
+            token = bearerToken.substring(prefix.length()).trim();
         }
         return token;
     }

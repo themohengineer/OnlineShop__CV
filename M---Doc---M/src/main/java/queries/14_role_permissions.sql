@@ -1,4 +1,3 @@
-# Admin Role
 insert into role_permission (role_id, permission_id) values (1, 1);
 insert into role_permission (role_id, permission_id) values (1, 2);
 insert into role_permission (role_id, permission_id) values (1, 3);
@@ -54,7 +53,6 @@ insert into role_permission (role_id, permission_id) values (1, 1000);
 insert into role_permission (role_id, permission_id) values (1, 1001);
 
 
-# User Role
 insert into role_permission (role_id, permission_id) values (4, 1100);
 insert into role_permission (role_id, permission_id) values (4, 1101);
 insert into role_permission (role_id, permission_id) values (4, 1102);

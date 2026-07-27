@@ -12,6 +12,8 @@ import net.mohamadi.Service.base.ReadService;
 import net.mohamadi.dto.site.NavDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,9 +33,7 @@ public class NavService implements CRUDService<NavDto>, HasValidation<NavDto> {
     }
 
 
-    @Override
     public List<NavDto> readAll() {
-
         return repository
                 .findAllByEnableIsTrueOrderByOrderNumberAsc()
                 .stream()
@@ -42,14 +42,30 @@ public class NavService implements CRUDService<NavDto>, HasValidation<NavDto> {
                                 .map(x, NavDto.class)
                 )
                 .toList();
+    }
 
+    @Override
+    public Page<NavDto> readAll(Integer page, Integer size) {
+
+        if (page == null)
+            page = 0;
+        if (size == null)
+            size = 10;
+
+        return repository
+                .findAll(Pageable.ofSize(size)
+                        .withPage(page))
+                .map(
+                        x -> mapper
+                                .map(x, NavDto.class)
+                );
     }
 
 
     @Override
-    public NavDto create(NavDto navDto) throws ValidationException {
-        checkValidation(navDto);
-        Nav data = mapper.map(navDto, Nav.class);
+    public NavDto create(NavDto dto) throws ValidationException {
+        checkValidation(dto);
+        Nav data = mapper.map(dto, Nav.class);
         data.setEnable(true);
         Integer lastOrderNumber = repository.findLastOrderNumber();
         if (lastOrderNumber == null) {
@@ -60,37 +76,38 @@ public class NavService implements CRUDService<NavDto>, HasValidation<NavDto> {
     }
 
     @Override
-    public void delete(Long id) {
+    public Boolean delete(Long id) {
 
         repository.deleteById(id);
+        return true;
 
     }
 
     @Override
-    public NavDto update(NavDto navDto) throws ValidationException, NotFoundExceptionss {
+    public NavDto update(NavDto dto) throws ValidationException, NotFoundExceptionss {
 
-        checkValidation(navDto);
-        if (navDto.getId() == null || navDto.getId() <= 0)
+        checkValidation(dto);
+        if (dto.getId() == null || dto.getId() <= 0)
             throw new ValidationException("Please enter correct id to update !");
-        Nav oldData = repository.findById(navDto.getId()).orElseThrow(NotFoundExceptionss::new);
-        oldData.setOrderNumber(Optional.ofNullable(navDto.getOrderNumber()).orElse(oldData.getOrderNumber()));
-        oldData.setLink(Optional.ofNullable(navDto.getLink()).orElse(oldData.getLink()));
-        oldData.setTitle(Optional.ofNullable(navDto.getTitle()).orElse(oldData.getTitle()));
+        Nav oldData = repository.findById(dto.getId()).orElseThrow(NotFoundExceptionss::new);
+        oldData.setOrderNumber(Optional.ofNullable(dto.getOrderNumber()).orElse(oldData.getOrderNumber()));
+        oldData.setLink(Optional.ofNullable(dto.getLink()).orElse(oldData.getLink()));
+        oldData.setTitle(Optional.ofNullable(dto.getTitle()).orElse(oldData.getTitle()));
         repository.save(oldData);
         return mapper.map(oldData, NavDto.class);
 
     }
 
     @Override
-    public void checkValidation(NavDto navDto) throws ValidationException {
-        if (navDto == null) {
-            throw new ValidationException("Please fill NAV Data !");
+    public void checkValidation(NavDto dto) throws ValidationException {
+        if (dto == null) {
+            throw new ValidationException("Please fill Data !");
         }
-        if (navDto.getTitle() == null || navDto.getTitle().isEmpty()) {
-            throw new ValidationException("Please fill NAV Title !");
+        if (dto.getTitle() == null || dto.getTitle().isEmpty()) {
+            throw new ValidationException("Please fill Title !");
         }
-        if (navDto.getLink() == null || navDto.getLink().isEmpty()) {
-            throw new ValidationException("Please fill NAV Title !");
+        if (dto.getLink() == null || dto.getLink().isEmpty()) {
+            throw new ValidationException("Please fill Title !");
         }
     }
 }

@@ -62,8 +62,9 @@ public class JwtUtil {
 
         } catch (JwtException | IllegalArgumentException e) {
 
-            System.out.println("Invalid JWT Token : " + token + " => " + e.getMessage());
-
+            System.out.print("Invalid JWT Token : " + token + " => " + e.getMessage());
+            e.printStackTrace();
+            System.out.printf("\n\n\n");
             return false;
 
         }

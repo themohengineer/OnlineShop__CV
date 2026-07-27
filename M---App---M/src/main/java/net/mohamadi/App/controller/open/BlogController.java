@@ -7,6 +7,7 @@ import net.mohamadi.Service.site.BlogService;
 import net.mohamadi.Service.site.ContentService;
 import net.mohamadi.dto.site.BlogDto;
 import net.mohamadi.dto.site.ContentDto;
+import net.mohamadi.dto.site.LimitedBlogDto;
 import net.mohamadi.dto.site.SingleBlogDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,14 +30,14 @@ public class BlogController {
 
     //    https://127.0.0.1/api/blog?page=1&size=1
     @GetMapping("")
-    public APIResponse<List<BlogDto>> getAll(
+    public APIResponse<List<LimitedBlogDto>> getAll(
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
 
         return APIResponse.
-                <List<BlogDto>>builder()
+                <List<LimitedBlogDto>>builder()
                 .status(HttpStatus.OK)
-                .data(service.readAll(page, size))
+                .data(service.readAllPublished(page, size))
                 .build();
 
     }

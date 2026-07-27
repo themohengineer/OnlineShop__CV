@@ -1,10 +1,10 @@
 package net.mohamadi.Service.base;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface ReadService<Dto> {
 
-    List<Dto> readAll();
+    Page<Dto> readAll(Integer page, Integer size);
 
 
 }
