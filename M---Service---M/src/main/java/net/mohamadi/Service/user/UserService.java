@@ -1,24 +1,25 @@
 package net.mohamadi.Service.user;
 
 
+import net.mohamadi.Common.exceptions.NotFoundExceptionss;
+import net.mohamadi.Common.exceptions.ValidationException;
+import net.mohamadi.Common.utils.HashUtil;
 import net.mohamadi.Data_Access.entity.user.Customer;
 import net.mohamadi.Data_Access.entity.user.Role;
 import net.mohamadi.Data_Access.entity.user.User;
 import net.mohamadi.Data_Access.repository.user.CustomerRepository;
-import net.mohamadi.Data_Access.repository.user.PermissionRepository;
 import net.mohamadi.Data_Access.repository.user.RoleRepository;
 import net.mohamadi.Data_Access.repository.user.UserRepository;
-
-import net.mohamadi.Common.exceptions.NotFoundExceptionss;
-import net.mohamadi.Common.exceptions.ValidationException;
-import net.mohamadi.Common.utils.HashUtil;
+import net.mohamadi.Service.base.CRUDService;
+import net.mohamadi.Service.base.HasValidation;
 import net.mohamadi.dto.user.LimitedUserDto;
 import net.mohamadi.dto.user.LoginDto;
 import net.mohamadi.dto.user.UserDto;
-
 import net.mohamadi.util.JwtUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,11 +27,10 @@ import java.util.HashSet;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements CRUDService<UserDto>, HasValidation<UserDto> {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
     private final RoleRepository roleRepository;
-    private final PermissionRepository permissionRepository;
     private final CustomerRepository customerRepository;
 
     private final JwtUtil jwtUtil;
@@ -38,16 +38,14 @@ public class UserService {
     private final ModelMapper mapper;
 
     @Autowired
-    public UserService(UserRepository userRepository,
+    public UserService(UserRepository repository,
                        RoleRepository roleRepository,
-                       PermissionRepository permissionRepository,
                        CustomerRepository customerRepository,
                        JwtUtil jwtUtil,
                        ModelMapper mapper
     ) {
-        this.userRepository = userRepository;
+        this.repository = repository;
         this.roleRepository = roleRepository;
-        this.permissionRepository = permissionRepository;
         this.customerRepository = customerRepository;
         this.jwtUtil = jwtUtil;
         this.mapper = mapper;
@@ -62,7 +60,7 @@ public class UserService {
 
         String password = HashUtil.toSHA1(dto.getPassword());
 
-        User user = userRepository
+        User user = repository
                 .findFirstByUsernameEqualsIgnoreCaseAndPassword(
                         dto.getUsername(),
                         password
@@ -81,7 +79,7 @@ public class UserService {
 
 
     public UserDto readUserByUserName(String username) throws Exception {
-        User user = userRepository.findFirstByUsername(username)
+        User user = repository.findFirstByUsername(username)
                 .orElseThrow(NotFoundExceptionss::new);
 
         return mapper.map(user, UserDto.class);
@@ -89,16 +87,17 @@ public class UserService {
 
 
     public UserDto read(Long id) throws Exception {
-        User user = userRepository.findById(id)
+        User user = repository.findById(id)
                 .orElseThrow(NotFoundExceptionss::new);
 
         return mapper.map(user, UserDto.class);
     }
 
-    public UserDto create(UserDto dto) throws Exception {
-        checkFullValidation(dto);
+    @Override
+    public UserDto create(UserDto dto) throws ValidationException {
+        checkValidation(dto);
 
-        Optional<User> oldUser = userRepository.findFirstByUsername(dto.getUsername());
+        Optional<User> oldUser = repository.findFirstByUsername(dto.getUsername());
 
         if (oldUser.isPresent())
             throw new ValidationException("کاربری با این نام ثبت نام کرده" +
@@ -122,12 +121,51 @@ public class UserService {
             roles.add(userRole.get());
             user.setRoles(roles);
         }
-        User savedUser = userRepository.save(user);
+        User savedUser = repository.save(user);
         return mapper.map(savedUser, UserDto.class);
 
     }
 
-    private static void checkFullValidation(UserDto dto) throws ValidationException {
+    @Override
+    public Page<UserDto> readAll(Integer page, Integer size) {
+
+        if (page == null)
+            page = 0;
+        if (size == null)
+            size = 10;
+
+        return repository
+                .findAll(Pageable.ofSize(size)
+                        .withPage(page))
+                .map(
+                        x -> mapper
+                                .map(x, UserDto.class)
+                );
+    }
+
+
+    @Override
+    public UserDto update(UserDto dto) throws ValidationException, NotFoundExceptionss {
+
+        checkValidation(dto);
+        if (dto.getId() == null || dto.getId() <= 0)
+            throw new ValidationException("Please enter correct id to update !");
+        User oldData = repository.findById(dto.getId()).orElseThrow(NotFoundExceptionss::new);
+        oldData.setMobile(Optional.ofNullable(dto.getMobile()).orElse(oldData.getMobile()));
+        oldData.setEmail(Optional.ofNullable(dto.getEmail()).orElse(oldData.getEmail()));
+        oldData.setEnable(Optional.ofNullable(dto.getEnable()).orElse(oldData.getEnable()));
+        if (dto.getCustomer() != null)
+            oldData.setCustomer(
+                    Optional.ofNullable(mapper.map(dto.getCustomer(), Customer.class))
+                            .orElse(oldData.getCustomer())
+            );
+        repository.save(oldData);
+        return mapper.map(oldData, UserDto.class);
+
+    }
+
+    @Override
+    public void checkValidation(UserDto dto) throws ValidationException {
         if (dto.getCustomer() == null)
             throw new ValidationException("Please enter a customer Info.");
         if (dto.getCustomer().getFirstName() == null || dto.getCustomer().getFirstName().isEmpty())
@@ -150,5 +188,9 @@ public class UserService {
             throw new ValidationException("PostalCode is null or empty");
     }
 
-
+    @Override
+    public Boolean delete(Long id) {
+        repository.deleteById(id);
+        return true;
+    }
 }

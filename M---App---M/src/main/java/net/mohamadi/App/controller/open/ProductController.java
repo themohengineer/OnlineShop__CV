@@ -3,7 +3,9 @@ package net.mohamadi.App.controller.open;
 
 import net.mohamadi.App.model.APIResponse;
 import net.mohamadi.Common.exceptions.NotFoundExceptionss;
+import net.mohamadi.Service.product.ProductCategoryService;
 import net.mohamadi.Service.product.ProductService;
+import net.mohamadi.dto.product.LimitedProductDto;
 import net.mohamadi.dto.product.ProductCategoryDto;
 import net.mohamadi.dto.product.ProductDto;
 import net.mohamadi.enums.ProductQueryType;
@@ -21,11 +23,13 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService service;
+    private final ProductCategoryService categoryService;
 
 
     @Autowired
-    public ProductController(ProductService service) {
+    public ProductController(ProductService service, ProductCategoryService categoryService) {
         this.service = service;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("category")
@@ -34,18 +38,18 @@ public class ProductController {
         return APIResponse
                 .<List<ProductCategoryDto>>builder()
                 .status(HttpStatus.OK)
-                .data(service.readAllCategories())
+                .data(categoryService.readAllActive())
                 .build();
 
     }
 
 
     @GetMapping("top/{type}")
-    public APIResponse<List<ProductDto>> getTopProducts(
+    public APIResponse<List<LimitedProductDto>> getTopProducts(
             @PathVariable ProductQueryType type) {
 
         return APIResponse
-                .<List<ProductDto>>builder()
+                .<List<LimitedProductDto>>builder()
                 .status(HttpStatus.OK)
                 .data(service.read6TopProducts(type))
                 .build();

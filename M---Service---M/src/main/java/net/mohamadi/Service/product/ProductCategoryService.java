@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +30,17 @@ public class ProductCategoryService implements CRUDService<ProductCategoryDto>, 
     public ProductCategoryService(ProductCategoryRepository repository, ModelMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
+    }
+
+
+    public List<ProductCategoryDto> readAllActive() {
+        return repository
+                .findAllByEnableIsTrue()
+                .stream()
+                .map(x -> mapper
+                        .map(x, ProductCategoryDto.class))
+                .toList();
+
     }
 
 
