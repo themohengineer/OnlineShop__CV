@@ -34,7 +34,6 @@ public class Invoice {
     @OneToMany(mappedBy = "invoice")
     private List<InvoiceItem> items;
 
-
     @ManyToOne
     private User user;
 }
