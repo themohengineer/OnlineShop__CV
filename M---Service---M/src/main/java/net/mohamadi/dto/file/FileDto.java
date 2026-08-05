@@ -3,6 +3,8 @@ package net.mohamadi.dto.file;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -12,7 +14,9 @@ public class FileDto {
 
     private Long id;
     private String name;
-    private String path;
+    private String uuid;  //Similar to xxxxxxxx_xxxx_xxxx_xxxx_xxxxxxxxxxxx
+    private String extension;
+    private Long size;
 
 
 

@@ -4,6 +4,7 @@ package net.mohamadi.Data_Access.entity.order;
 import jakarta.persistence.*;
 import lombok.*;
 import net.mohamadi.Data_Access.entity.file.File;
+import net.mohamadi.Data_Access.entity.user.User;
 import net.mohamadi.Data_Access.enums.BlogStatus;
 import net.mohamadi.Data_Access.enums.OrderStatus;
 
@@ -33,4 +34,7 @@ public class Invoice {
     @OneToMany(mappedBy = "invoice")
     private List<InvoiceItem> items;
 
+
+    @ManyToOne
+    private User user;
 }
