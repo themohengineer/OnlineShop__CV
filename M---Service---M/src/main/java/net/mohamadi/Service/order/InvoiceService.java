@@ -25,7 +25,6 @@ public class InvoiceService implements
         CreateService<InvoiceDto>,
         HasValidation<InvoiceDto> {
 
-
     private final InvoiceRepository repository;
     private final InvoiceItemRepository itemRepository;
     private final ModelMapper mapper;
